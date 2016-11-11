@@ -1,5 +1,5 @@
 # interceptjs
-Javascript library to manage embed call to action intercepts.
+Javascript library to manage embedded call to action intercepts.
 
 # Usage
 Include the Javascript file after jQuery is loaded:
@@ -10,15 +10,20 @@ On all pages that should use the intercept, call the plugin:
 ```
 <script>
     $('html').interceptjs({
-        // pagenum: 0,
-        // power_switch: 1,
-        // user_override: 0,
-        // percent: 100,
-        // google_analytics: 1
-        // session_duration: 24,
-        // show_delay: 5000,
-        // type: alert,
-        // text: 'Powered by interceptjs!'
+        pagenum: 0,
+        power_switch: 1,
+        user_override: 0,
+        percent: 100,
+        google_analytics: 1
+        session_duration: 24,
+        show_delay: 5000,
+        type: alert,
+        text: 'Powered by interceptjs!'
     });
 </script>
 ```
+You should also include styles into your site, do so like this:
+```
+<link href="../path/to/jquery.interceptjs.css" rel="stylesheet">
+```
+
