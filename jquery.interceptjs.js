@@ -9,8 +9,8 @@
             google_analytics: 0,
             session_duration: 24,
             show_delay: 0,
-            type: 'alert',
-            text: '<p>Powered by <a href="https://interceptjs.io/#defaultsettings">interceptjs</a>!</p>',
+            type: 'banner',
+            text: '<p>Powered by <a href="https://interceptjs.io/#defaultsettings">interceptjs</a>! You should change this message.</p>',
             complete: null
         }, options);
         // Initialize user object
@@ -20,30 +20,45 @@
         if (settings.google_analytics == 1 && window.ga) {
             use_ga = 1;
         }
-        // HTML alert
-        var html_alert = '<div id="ijs_html_alert"><div id="ijs_close">x</div>' + settings.text + '</div>';
+        // Banner alert
+        var html_banner = '<div id="ijs_banner" class="ijs_intercept"><div id="ijs_banner_close" class="ijs_close">x</div>' + settings.text + '</div>';
+        // Modal alert
+        var html_modal = '<div id="ijs_modal" class="ijs_intercept"><div id="ijs_modal_close" class="ijs_close">x</div>' + settings.text + '</div>';
         // Show intercept logic
         function showIntercept() {
             // Wait for show_delay seconds before actually showing anything
             var tid = window.setTimeout(function() {
                 if (use_ga) {
-                    ga('send', 'event', 'interceptjs', 'show_intercept');
+                    ga('send', 'event', 'interceptjs', 'show_intercept', settings.type);
                 }
-                // Insert intercept
-                $('body').prepend(html_alert);
+                switch (settings.type) {
+                    // Popup
+                    case 'popup':
+
+                        break;
+                        // Modal
+                    case 'modal':
+                        $('body').prepend(html_modal).show();
+                        break;
+                        // Banner
+                    case 'banner':
+                    default:
+                        // Insert banner at the top
+                        $('body').prepend(html_banner).show();
+                }
                 // Click events
-                $('#ijs_close').on('click', function() {
+                $('.ijs_close').on('click', function() {
                     if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'close_intercept');
+                        ga('send', 'event', 'interceptjs', 'close_intercept', settings.type);
                     }
-                    $('#ijs_html_alert').hide();
+                    $('.ijs_intercept').hide();
                     ijs.user_dismiss = 1;
                     Cookies.set('ijs', ijs);
                     return;
                 });
-                $('#ijs_html_alert a').on('click', function() {
+                $('.ijs_intercept a').on('click', function() {
                     if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'click_intercept');
+                        ga('send', 'event', 'interceptjs', 'click_intercept', settings.type);
                     }
                     return;
                 });

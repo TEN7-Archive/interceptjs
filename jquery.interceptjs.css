@@ -1,18 +1,39 @@
-#ijs_html_alert {
-    width: 100%;
-    display: block;
-    position: absolute;
-    top: 0;
+/* global */
+.ijs_intercept {
+	display: hidden;
 }
 
-#ijs_close {
+/* banner */
+
+#ijs_banner {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 0.7em 0;
+    margin: 0;
+}
+
+#ijs_banner p {
+    margin: 0;
+    padding: 0;
+}
+
+#ijs_banner_close {
     width: 1em;
     height: 1em;
     position: relative;
     float: right;
     font-weight: bold;
+    padding-right: 0.5em;
 }
 
-#ijs_close:hover {
+#ijs_banner_close:hover {
     cursor: pointer;
+}
+
+
+/* modal */
+
+#ijs_modal {
+
 }
