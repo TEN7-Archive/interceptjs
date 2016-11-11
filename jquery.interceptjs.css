@@ -1,0 +1,18 @@
+#ijs_html_alert {
+    width: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+}
+
+#ijs_close {
+    width: 1em;
+    height: 1em;
+    position: relative;
+    float: right;
+    font-weight: bold;
+}
+
+#ijs_close:hover {
+    cursor: pointer;
+}
