@@ -113,7 +113,10 @@
                         break;
                         // Modal
                     case 'modal':
-
+                        $('body').append(html_modal);
+                        $('#ijs_modal').modal({
+                            fadeDuration: 100
+                        });
                         break;
                         // Banner
                     case 'banner':
@@ -121,7 +124,7 @@
                         // Insert banner at the top
                         $('body').prepend(html_banner).show();
                 }
-                // Click events
+                // Click events: banner
                 $('.ijs_close').on('click', function() {
                     if (use_ga) {
                         ga('send', 'event', 'interceptjs', 'close_intercept', settings.type);
@@ -135,6 +138,15 @@
                     if (use_ga) {
                         ga('send', 'event', 'interceptjs', 'click_intercept', settings.type);
                     }
+                    return;
+                });
+                // Click events: modal
+                $('#ijs_modal').on($.modal.CLOSE, function(event, modal) {
+                    if (use_ga) {
+                        ga('send', 'event', 'interceptjs', 'close_intercept', settings.type);
+                    }
+                    ijs.user_dismiss = 1;
+                    Cookies.set('ijs', ijs);
                     return;
                 });
                 return;
