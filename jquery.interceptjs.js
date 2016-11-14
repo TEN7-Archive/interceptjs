@@ -134,7 +134,7 @@
                     Cookies.set('ijs', ijs);
                     return;
                 });
-                $('.ijs_intercept a').on('click', function() {
+                $('.ijs_click').on('click', function() {
                     if (use_ga) {
                         ga('send', 'event', 'interceptjs', 'click_intercept', settings.type);
                     }
