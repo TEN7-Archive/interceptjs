@@ -50,6 +50,10 @@ $('html').interceptjs({
 <!-- end interceptjs -->
 ```
 
+# Demo
+As an example, this is what an intercept might look like of both `banner` and `modal` types for a site like iamgreaterthanzero.com:
+![interceptjs demo](https://cdn.rawgit.com/ten7/interceptjs/master/interceptjs-demo.gif)
+
 # User flow
 The decisions of when and where to show the call to invitation is controlled using this workflow:
 
