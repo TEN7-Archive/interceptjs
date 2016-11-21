@@ -17,7 +17,7 @@ Place this after you've loaded jQuery and on every page you'd like the call to a
 <!-- start interceptjs -->
 <!-- requires the js-cookie library from cloudflare -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js" integrity="sha256-S20kSlaai+/AuQHj3KjoLxmxiOLT5298YvzpaTXtYxE=" crossorigin="anonymous"></script>
-<!-- only required if you are using the 'modal' type, otherwise sage to omit -->
+<!-- only required if you are using the 'modal' type, otherwise safe to omit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.8.0/jquery.modal.min.js" integrity="sha256-UeH9wuUY83m/pXN4vx0NI5R6rxttIW73OhV0fE0p/Ac=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.8.0/jquery.modal.min.css" integrity="sha256-rll6wTV76AvdluCY5Pzv2xJfw2x7UXnK+fGfj9tQocc=" crossorigin="anonymous" />
 <!-- intercept js plugin itself -->
