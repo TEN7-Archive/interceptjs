@@ -104,7 +104,7 @@
             // Wait for show_delay seconds before actually showing anything
             var tid = window.setTimeout(function() {
                 if (use_ga) {
-                    ga('send', 'event', 'interceptjs', 'show_intercept', settings.type);
+                    ga('send', 'event', 'interceptjs', 'show_intercept_' + settings.type, window.location.href);
                 }
                 switch (settings.type) {
                     // Popup
@@ -127,7 +127,7 @@
                 // Click events: banner
                 $('.ijs_close').on('click', function() {
                     if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'close_intercept', settings.type);
+                        ga('send', 'event', 'interceptjs', 'close_intercept_' + settings.type, window.location.href);
                     }
                     $('.ijs_intercept').hide();
                     ijs.user_dismiss = 1;
@@ -136,14 +136,17 @@
                 });
                 $('.ijs_click').on('click', function() {
                     if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'click_intercept', settings.type);
+                        ga('send', 'event', 'interceptjs', 'click_intercept_' + settings.type, window.location.href);
                     }
+                    $('.ijs_intercept').hide();
+                    ijs.user_dismiss = 1;
+                    Cookies.set('ijs', ijs);
                     return;
                 });
                 // Click events: modal
                 $('#ijs_modal').on($.modal.CLOSE, function(event, modal) {
                     if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'close_intercept', settings.type);
+                        ga('send', 'event', 'interceptjs', 'close_intercept_' + settings.type, window.location.href);
                     }
                     ijs.user_dismiss = 1;
                     Cookies.set('ijs', ijs);
