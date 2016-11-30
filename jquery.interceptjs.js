@@ -31,7 +31,7 @@
             use_ga = 1;
         }
         // Banner alert
-        var html_banner = '<div id="ijs_banner" class="ijs_intercept"><div id="ijs_banner_close" class="ijs_close">x</div>' + settings.text + '</div>';
+        var html_banner = '<div id="ijs_banner_wrapper"><div id="ijs_banner" class="ijs_intercept"><div id="ijs_banner_close" class="ijs_close">x</div>' + settings.text + '</div></div>';
         // Modal alert
         var html_modal = '<div id="ijs_modal" class="ijs_intercept">' + settings.text + '</div>';
         // Return this
