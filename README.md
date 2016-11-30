@@ -21,7 +21,7 @@ Place this after you've loaded jQuery and on every page you'd like the call to a
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.8.0/jquery.modal.min.js" integrity="sha256-UeH9wuUY83m/pXN4vx0NI5R6rxttIW73OhV0fE0p/Ac=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.8.0/jquery.modal.min.css" integrity="sha256-rll6wTV76AvdluCY5Pzv2xJfw2x7UXnK+fGfj9tQocc=" crossorigin="anonymous" />
 <!-- intercept js plugin itself -->
-<script src="https://cdn.rawgit.com/ten7/interceptjs/master/jquery.interceptjs.js"></script>
+<script src="https://cdn.rawgit.com/ten7/interceptjs/v0.2/jquery.interceptjs.js"></script>
 <!-- call the intercept js plugin, overriding defaults -->
 <script>
 $('html').interceptjs({
@@ -46,7 +46,7 @@ $('html').interceptjs({
 });
 </script>
 <!-- intercept js styles -->
-<link href="https://cdn.rawgit.com/ten7/interceptjs/master/jquery.interceptjs.css" rel="stylesheet">
+<link href="https://cdn.rawgit.com/ten7/interceptjs/v0.2/jquery.interceptjs.css" rel="stylesheet">
 <!-- end interceptjs -->
 ```
 
