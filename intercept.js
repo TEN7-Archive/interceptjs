@@ -112,6 +112,10 @@ function Intercept(message, settings) {
     body[0].appendChild(intercept);
   }
 
+  /*
+   * Utility Functions
+   */
+
   function buildInterceptUI() {
     var intercept;
     if (options.type === 'banner') {
@@ -155,7 +159,6 @@ function Intercept(message, settings) {
     instance.data.user_dismissed = 1;
     Cookies.set('ijs', instance.data);
   }
-
 
   // Function to figure out if we should start a new session; updates
   function updateCookieWithSessionInfo() {
