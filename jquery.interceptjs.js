@@ -26,16 +26,16 @@
         // Initialize user object
         // var ijs = {};
         // Use analytics?
-        var use_ga = 0;
-        if (settings.google_analytics == 1 && window.ga) {
-            use_ga = 1;
-        }
+        // var use_ga = 0;
+        // if (settings.google_analytics == 1 && window.ga) {
+        //     use_ga = 1;
+        // }
         // Banner alert
         // var html_banner = '<div id="ijs_banner_wrapper" class="ijs_intercept"><div id="ijs_banner"><div id="ijs_banner_close" class="ijs_close">x</div>' + settings.text + '</div></div>';
         // Modal alert
         // var html_modal = '<div id="ijs_modal" class="ijs_intercept">' + settings.text + '</div>';
         // Return this
-        return this.each(function() {
+        // return this.each(function() {
             // Is this thing even on?
             // if (settings.power_switch == 0) {
             //     // Do nothing
@@ -58,47 +58,49 @@
             // }
             // Should we start a new session?
             // var session_duration = settings.session_duration * 3600000;
-            var elapsed_time = ijs.last_visit + session_duration;
-            if ((ts > elapsed_time) || ts == ijs.first_visit) {
-                // New session
-                ijs.pageview = 1;
-            } else {
-                // Continue existing session
-                ijs.pageview++;
-            }
-            // Update last visit
-            ijs.last_visit = ts;
-            // Save cookie
-            Cookies.set('ijs', ijs);
+            // var elapsed_time = ijs.last_visit + session_duration;
+            // if ((ts > elapsed_time) || ts == ijs.first_visit) {
+            //     // New session
+            //     ijs.pageview = 1;
+            // } else {
+            //     // Continue existing session
+            //     ijs.pageview++;
+            // }
+            // // Update last visit
+            // ijs.last_visit = ts;
+            // // Save cookie
+            // Cookies.set('ijs', ijs);
+
+
             // User dismiss on?
-            if (ijs.user_dismiss == 1) {
-                if (settings.user_override == 1) {
-                    ijs.user_dismiss = 0;
-                    Cookies.set('ijs', ijs);
-                } else {
-                    // Do nothing
-                    return;
-                }
-            }
+            // if (ijs.user_dismiss == 1) {
+            //     if (settings.user_override == 1) {
+            //         ijs.user_dismiss = 0;
+            //         Cookies.set('ijs', ijs);
+            //     } else {
+            //         // Do nothing
+            //         return;
+            //     }
+            // }
             // Check the page we're on
-            if (settings.pagenum == 0 || settings.pagenum == ijs.pageview) {
-                // What percentage of the time to show?
-                if (rndnum < settings.percent) {
-                    // Show the intercept
-                    showIntercept();
-                } else {
-                    // Do nothing
-                    return;
-                }
-            } else {
-                // Do nothing
-                return;
-            }
-            // Complete
-            if ($.isFunction(settings.complete)) {
-                settings.complete.call(this);
-            }
-        });
+        //     if (settings.pagenum == 0 || settings.pagenum == ijs.pageview) {
+        //         // What percentage of the time to show?
+        //         if (rndnum < settings.percent) {
+        //             // Show the intercept
+        //             showIntercept();
+        //         } else {
+        //             // Do nothing
+        //             return;
+        //         }
+        //     } else {
+        //         // Do nothing
+        //         return;
+        //     }
+        //     // Complete
+        //     if ($.isFunction(settings.complete)) {
+        //         settings.complete.call(this);
+        //     }
+        // });
         // Show intercept logic
         function showIntercept() {
             // Wait for show_delay seconds before actually showing anything
@@ -124,25 +126,29 @@
                         // Insert banner at the top
                         $('body').prepend(html_banner).show();
                 }
+
+
+
+
                 // Click events: banner
-                $('.ijs_close').on('click', function() {
-                    if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'close_intercept_' + settings.type, window.location.href);
-                    }
-                    $('.ijs_intercept').hide();
-                    ijs.user_dismiss = 1;
-                    Cookies.set('ijs', ijs);
-                    return;
-                });
-                $('.ijs_click').on('click', function() {
-                    if (use_ga) {
-                        ga('send', 'event', 'interceptjs', 'click_intercept_' + settings.type, window.location.href);
-                    }
-                    $('.ijs_intercept').hide();
-                    ijs.user_dismiss = 1;
-                    Cookies.set('ijs', ijs);
-                    return;
-                });
+                // $('.ijs_close').on('click', function() {
+                //     // if (use_ga) {
+                //     //     ga('send', 'event', 'interceptjs', 'close_intercept_' + settings.type, window.location.href);
+                //     // }
+                //     // $('.ijs_intercept').hide();
+                //     ijs.user_dismiss = 1;
+                //     Cookies.set('ijs', ijs);
+                //     return;
+                // });
+                // $('.ijs_click').on('click', function() {
+                //     if (use_ga) {
+                //         ga('send', 'event', 'interceptjs', 'click_intercept_' + settings.type, window.location.href);
+                //     }
+                //     $('.ijs_intercept').hide();
+                //     ijs.user_dismiss = 1;
+                //     Cookies.set('ijs', ijs);
+                //     return;
+                // });
                 // Click events: modal
                 $('#ijs_modal').on($.modal.CLOSE, function(event, modal) {
                     if (use_ga) {
