@@ -1,15 +1,15 @@
 (function($) {
     $.fn.interceptjs = function(options) {
         // https://github.com/js-cookie/js-cookie
-        if (!window.Cookies) {
-            console.log('js-cookie is not installed. See http://interceptjs.io/ for help.');
-            return;
-        }
-        // https://github.com/kylefox/jquery-modal
-        if (!$.modal) {
-            console.log('jquery-modal is not installed. See http://interceptjs.io/ for help.');
-            return;
-        }
+        // if (!window.Cookies) {
+        //     console.log('js-cookie is not installed. See http://interceptjs.io/ for help.');
+        //     return;
+        // }
+        // // https://github.com/kylefox/jquery-modal
+        // if (!$.modal) {
+        //     console.log('jquery-modal is not installed. See http://interceptjs.io/ for help.');
+        //     return;
+        // }
         // Establish our default settings
         // var settings = $.extend({
         //     pagenum: 0,
@@ -105,9 +105,9 @@
         function showIntercept() {
             // Wait for show_delay seconds before actually showing anything
             var tid = window.setTimeout(function() {
-                if (use_ga) {
-                    ga('send', 'event', 'interceptjs', 'show_intercept_' + settings.type, window.location.href);
-                }
+                // if (use_ga) {
+                //     ga('send', 'event', 'interceptjs', 'show_intercept_' + settings.type, window.location.href);
+                // }
                 switch (settings.type) {
                     // Popup
                     case 'popup':
@@ -121,10 +121,10 @@
                         });
                         break;
                         // Banner
-                    case 'banner':
-                    default:
-                        // Insert banner at the top
-                        $('body').prepend(html_banner).show();
+                    // case 'banner':
+                    // default:
+                    //     // Insert banner at the top
+                    //     $('body').prepend(html_banner).show();
                 }
 
 

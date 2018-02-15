@@ -20,23 +20,13 @@ var Helpers = {
   }
 };
 
-function setupUI() {
-  /*
-    vars and handlers
-   */
+function Intercept(options) {
+
   // Do we have cookies library?
   if (!window.Cookies) {
     console.log('js-cookie is not installed. See http://interceptjs.io/ for help.');
     return;
   }
-}
-
-function Intercept(message, settings) {
-  // Banner alert
-  // const html_banner = document.createElement('<div id="ijs_banner_wrapper" class="ijs_intercept"><div id="ijs_banner"><div id="ijs_banner_close" class="ijs_close">x</div></div></div>');
-  const html_banner = document.createElement('div');
-  // Modal alert
-  const html_modal = '<div id="ijs_modal" class="ijs_intercept"></div>';
 
   var defaultSettings = {
     // id: 'interceptjs-' + Math.round(Math.random()*1E4),
@@ -48,19 +38,23 @@ function Intercept(message, settings) {
     session_duration: 24,
     show_delay: 0,
     type: 'banner',
-    text: message,
+    text: '<p>Powered by <a href="https://interceptjs.io/#defaultsettings">interceptjs</a>! You should change this message.</p>',
     complete: null,
     target: 'body'
   };
 
-  var options = Helpers.extendDefaults(defaultSettings, settings);
+  var settings = Helpers.extendDefaults(defaultSettings, options);
 
   // Update our session duration to be milliseconds
-  options.session_duration = options.session_duration * 3600000;
+  settings.session_duration = settings.session_duration * 3600000;
+
+  // Are we using google analytics?
+  var use_ga = (settings.google_analytics === 1 && window.ga) ? true : false;
 
   // eject if this has been turned off
   // todo why is this setting necessary, wouldn't they just not call the Intercept function?
-  if (options.power_switch === 0) {return;}
+  // I guess maybe it's useful for a Drupal module UI user config??
+  if (settings.power_switch === 0) {return;}
 
   // Initialize this instance of the intercept
   var instance = {};
@@ -83,24 +77,24 @@ function Intercept(message, settings) {
   }
 
   // Can the user dismiss the message?
-  setDismissPriveledges();
+  setDismissPrivileges();
 
   // Show the intercept if it matches pagenum and show percent settings
-  if ( options.showOnXPages === 0 || options.showOnXPages === instance.data.pageview ) {
+  if ( settings.showOnXPages === 0 || settings.showOnXPages === instance.data.pageview ) {
     var rndnum = Helpers.getRandomNumber();
-    if (rndnum < options.percent) {
+    if (rndnum < settings.percent) {
 
       // Show intercept after any delay option settings
       window.setTimeout(
         showIntercept,
-        options.show_delay
+        settings.show_delay
       );
     }
   }
 
   // run callback function if provided
-  if (typeof options.complete === 'function') {
-    options.complete.call(this);
+  if (typeof settings.complete === 'function') {
+    settings.complete.call(this);
   }
 
   function showIntercept() {
@@ -109,41 +103,73 @@ function Intercept(message, settings) {
     var intercept = buildInterceptUI();
 
     // Add the intercept to the DOM
-    body[0].appendChild(intercept);
+    body[0].prepend(intercept);
+
+    if (use_ga) {
+      ga('send', 'event', 'interceptjs', 'show_intercept_' + settings.type, window.location.href);
+    }
   }
 
   /*
    * Utility Functions
    */
-
   function buildInterceptUI() {
-    var intercept;
-    if (options.type === 'banner') {
-      var bannerFrag = document.createDocumentFragment();
 
-      var wrapper = document.createElement('div');
-      wrapper.className = 'ijs_intercept';
-      wrapper.id = 'ijs_banner_wrapper';
+    switch (settings.type) {
+      case 'modal':
+        var modalFrag = document.createDocumentFragment();
 
-      var banner = document.createElement('div');
-      banner.id = 'ijs_banner_wrapper';
-      banner.innerHTML = options.text;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'ijs_intercept';
+        wrapper.id = 'ijs_modal';
 
-      var close = document.createElement('div');
-      close.className = 'ijs_close';
-      close.id = 'ijs_banner_close';
-      close.textContent = 'x';
-      close.onclick = closeIntercept;
+        var modalContent = document.createElement('div');
+        modalContent.className = 'ijs_modal--content';
 
-      // Compile banner children elements
-      banner.appendChild(close);
-      wrapper.appendChild(banner);
-      bannerFrag.appendChild(wrapper);
+        var modalClose = document.createElement('button');
+        modalClose.className = 'ijs_modal--close';
+        modalClose.setAttribute('aria-label', 'Close modal window');
+        modalClose.innerHTML = '&times;';
+        modalClose.onclick = closeIntercept;
 
-      intercept = bannerFrag;
+        var modalBody = document.createElement('p');
+        modalBody.className = 'ijs_modal--body';
+        modalBody.innerHTML = settings.text;
+
+        // Put together the modal pieces
+        modalContent.appendChild(modalClose);
+        modalContent.appendChild(modalBody);
+        wrapper.appendChild(modalContent);
+        modalFrag.appendChild(wrapper);
+
+        return modalFrag;
+
+      // Banner Intercept
+      case 'banner':
+      default:
+        var bannerFrag = document.createDocumentFragment();
+
+        var wrapper = document.createElement('div');
+        wrapper.className = 'ijs_intercept';
+        wrapper.id = 'ijs_banner_wrapper';
+
+        var banner = document.createElement('div');
+        banner.id = 'ijs_banner_wrapper';
+        banner.innerHTML = settings.text;
+
+        var close = document.createElement('div');
+        close.className = 'ijs_close';
+        close.id = 'ijs_banner_close';
+        close.textContent = 'x';
+        close.onclick = closeIntercept;
+
+        // Compile banner children elements
+        banner.appendChild(close);
+        wrapper.appendChild(banner);
+        bannerFrag.appendChild(wrapper);
+
+        return bannerFrag;
     }
-
-    return intercept;
   }
 
   function closeIntercept() {
@@ -151,8 +177,8 @@ function Intercept(message, settings) {
     document.querySelector('.ijs_intercept').style.display = 'none';
 
     // If google analytics, send a click record
-    if (options.google_analytics === 1 && window.ga) {
-      ga('send', 'event', 'interceptjs', 'close_intercept_' + options.type, window.location.href);
+    if (use_ga) {
+      ga('send', 'event', 'interceptjs', 'close_intercept_' + settings.type, window.location.href);
     }
 
     // update the instance that user has dismissed
@@ -163,7 +189,7 @@ function Intercept(message, settings) {
   // Function to figure out if we should start a new session; updates
   function updateCookieWithSessionInfo() {
     var currentTime = Helpers.getCurrentTime();
-    var sessionResetTime = instance.data.last_visit + options.session_duration;
+    var sessionResetTime = instance.data.last_visit + settings.session_duration;
 
     if ( (currentTime > sessionResetTime) || (currentTime === instance.data.first_visit) ) {
       // start a new session
@@ -178,8 +204,8 @@ function Intercept(message, settings) {
     Cookies.set('ijs', instance.data);
   }
 
-  function setDismissPriveledges() {
-    if ( instance.data.user_dismissed === 1 && options.user_override === 1 ) {
+  function setDismissPrivileges() {
+    if ( instance.data.user_dismissed === 1 && settings.user_override === 1 ) {
         instance.data.user_dismissed = 0;
         Cookies.set('ijs', ijs);
     }
@@ -187,6 +213,8 @@ function Intercept(message, settings) {
 }
 
 
-var UI = setupUI();
-var sampleMarkup = '<p>Powered by <a href="https://interceptjs.io/#defaultsettings">interceptjs</a>! You should change this message.</p>';
-var intercept = Intercept(sampleMarkup);
+var intercept = Intercept({
+  text: 'This is my message',
+  type: 'modal',
+  show_delay: 2000
+});
