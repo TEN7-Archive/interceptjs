@@ -211,10 +211,3 @@ function Intercept(options) {
     }
   }
 }
-
-
-var intercept = Intercept({
-  text: 'This is my message',
-  type: 'modal',
-  show_delay: 2000
-});
